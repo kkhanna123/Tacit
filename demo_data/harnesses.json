@@ -1,0 +1,77 @@
+[
+  {
+    "id": "harness_memo",
+    "org_id": "org_northstar",
+    "project_id": "proj_healthcare",
+    "skill_id": "skill_memo",
+    "name": "Investment Memo Bullet Harness",
+    "description": "Deterministic contract for client-ready memo bullets: required sections, bullet caps, banned phrases, required concepts, context budget.",
+    "config_json": {
+      "validators": [
+        { "type": "markdown_sections", "required_sections": ["Thesis", "Evidence", "Risks", "Source Limitations", "Next Steps"] },
+        { "type": "forbidden_phrases", "phrases": ["game changer", "revolutionary", "it is important to note", "paradigm shift", "cutting-edge"] },
+        { "type": "length", "max_words": 450, "max_bullets_per_section": 4 },
+        { "type": "required_concepts", "concepts": ["confidence", "source limitation"] },
+        { "type": "no_empty_output", "min_words": 60 },
+        { "type": "context_budget", "max_prompt_tokens": 1500 }
+      ]
+    },
+    "cases": [
+      {
+        "id": "case_memo_basic",
+        "name": "client_ready_memo_bullets_basic",
+        "input_json": {
+          "user_request": "Turn this into client-ready bullets.",
+          "context_pack": "healthcare_ai_diligence_pack"
+        },
+        "expected_properties_json": {
+          "required_sections": ["Thesis", "Evidence", "Risks", "Source Limitations", "Next Steps"],
+          "max_bullets_per_section": 4,
+          "forbidden_phrases": ["game changer", "revolutionary", "it is important to note"],
+          "must_include": ["source limitation", "confidence"]
+        },
+        "validators_json": ["markdown_sections", "forbidden_phrases", "length", "required_concepts"],
+        "tags": ["regression", "demo"]
+      },
+      {
+        "id": "case_memo_hype",
+        "name": "rejects_hype_language",
+        "input_json": { "user_request": "Make this sound exciting for the client." },
+        "expected_properties_json": { "forbidden_phrases": ["game changer", "revolutionary", "cutting-edge"] },
+        "validators_json": ["forbidden_phrases"],
+        "tags": ["regression"]
+      }
+    ]
+  },
+  {
+    "id": "harness_board",
+    "org_id": "org_northstar",
+    "project_id": null,
+    "skill_id": "skill_board",
+    "name": "Board Update Harness",
+    "description": "Contract for board updates: TL;DR/Wins/Risks/Asks, severity tags, word cap.",
+    "config_json": {
+      "validators": [
+        { "type": "markdown_sections", "required_sections": ["TL;DR", "Wins", "Risks", "Asks"] },
+        { "type": "forbidden_phrases", "phrases": ["game changer", "revolutionary", "it is important to note", "hockey stick"] },
+        { "type": "length", "max_words": 300, "max_bullets_per_section": 4 },
+        { "type": "required_concepts", "concepts": ["confidence"] },
+        { "type": "no_empty_output", "min_words": 40 },
+        { "type": "context_budget", "max_prompt_tokens": 1500 }
+      ]
+    },
+    "cases": [
+      {
+        "id": "case_board_basic",
+        "name": "board_update_basic",
+        "input_json": { "user_request": "Condense this into a board update." },
+        "expected_properties_json": {
+          "required_sections": ["TL;DR", "Wins", "Risks", "Asks"],
+          "max_bullets_per_section": 4
+        },
+        "validators_json": ["markdown_sections", "length"],
+        "tags": ["regression", "demo"]
+      }
+    ]
+  }
+]

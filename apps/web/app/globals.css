@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  /* Paper workspace — cool paper, ink navy, hairlines. */
+  --paper: #f5f6f8;
+  --card: #ffffff;
+  --ink: #16202b;
+  --ink-2: #55616d;
+  --ink-3: #8a94a0;
+  --line: #e4e7eb;
+  --line-2: #d2d8de;
+  /* Semantic only: green = deterministic pass, rust = fail, amber = caution. */
+  --pass: #1f7a4d;
+  --pass-tint: #e9f3ed;
+  --fail: #b3422e;
+  --fail-tint: #f9ece8;
+  --warn: #94660a;
+  --warn-tint: #f7f0dd;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-pass: var(--pass);
+  --color-pass-tint: var(--pass-tint);
+  --color-fail: var(--fail);
+  --color-fail-tint: var(--fail-tint);
+  --color-warn: var(--warn);
+  --color-warn-tint: var(--warn-tint);
+  --font-sans: var(--font-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  letter-spacing: -0.006em;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Typed-object eyebrow — the system's five objects always announce themselves. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.hairline-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+/* Pipeline rail tick-in — the one orchestrated moment. */
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.step-in {
+  animation: step-in 0.28s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .step-in { animation: none; }
+}
+
+/* Rendered markdown output (memo artifact) */
+.memo :is(h1, h2, h3) {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 1.1em 0 0.45em;
+}
+.memo h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 5px;
+}
+.memo ul { padding-left: 1.1em; margin: 0.4em 0 0.9em; }
+.memo li { margin: 0.35em 0; line-height: 1.55; list-style: none; position: relative; }
+.memo li::before {
+  content: "–";
+  position: absolute;
+  left: -1.1em;
+  color: var(--ink-3);
+}
+.memo p { line-height: 1.6; margin: 0.6em 0; }
+
+pre.blob {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  background: var(--paper);
+  padding: 6px 9px;
+  font-size: 12.5px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+  border-radius: 2px;
+}

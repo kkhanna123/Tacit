@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "enterprise-mind/prompt_bundle",
+  "title": "PromptBundle",
+  "description": "Internal canonical prompt bundle (heartbeat §10.4). Provider adapters translate this; provider differences never leak into the app.",
+  "type": "object",
+  "required": [
+    "system_contract",
+    "developer_contract",
+    "task",
+    "context_pack",
+    "skill_instructions",
+    "output_schema",
+    "rails",
+    "examples",
+    "token_budget",
+    "provider_profile"
+  ],
+  "properties": {
+    "system_contract": { "type": "string" },
+    "developer_contract": { "type": "string" },
+    "task": { "type": "string" },
+    "normalized_intent": { "type": "object" },
+    "context_pack": { "type": "string" },
+    "skill_instructions": { "type": "string" },
+    "output_schema": { "type": "object" },
+    "rails": { "type": "array", "items": { "type": "string" } },
+    "examples": { "type": "array", "items": { "type": "object" } },
+    "token_budget": { "type": "integer", "minimum": 1 },
+    "provider_profile": { "enum": ["anthropic", "openai", "mock"] }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "enterprise-mind/validator_config",
+  "title": "ValidatorConfig",
+  "description": "One deterministic validator entry in a skill version's validators_json or a harness config (heartbeat §11.2).",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "type": {
+      "enum": [
+        "markdown_sections",
+        "forbidden_phrases",
+        "length",
+        "required_concepts",
+        "no_empty_output",
+        "context_budget"
+      ]
+    },
+    "required_sections": { "type": "array", "items": { "type": "string" } },
+    "phrases": { "type": "array", "items": { "type": "string" } },
+    "max_words": { "type": "integer" },
+    "max_bullets_per_section": { "type": "integer" },
+    "concepts": { "type": "array", "items": { "type": "string" } },
+    "min_words": { "type": "integer" },
+    "max_prompt_tokens": { "type": "integer" }
+  }
+}

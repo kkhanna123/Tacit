@@ -1,0 +1,41 @@
+{
+  "org": {
+    "id": "org_northstar",
+    "name": "Northstar Capital Demo",
+    "slug": "northstar-capital",
+    "plan": "demo"
+  },
+  "users": [
+    { "id": "user_marcus", "email": "marcus@northstar.demo", "name": "Marcus Webb" },
+    { "id": "user_priya", "email": "priya@northstar.demo", "name": "Priya Sharma" },
+    { "id": "user_dana", "email": "dana@northstar.demo", "name": "Dana Kim" }
+  ],
+  "memberships": [
+    { "id": "mem_1", "org_id": "org_northstar", "user_id": "user_marcus", "role": "builder", "status": "active" },
+    { "id": "mem_2", "org_id": "org_northstar", "user_id": "user_priya", "role": "admin", "status": "active" },
+    { "id": "mem_3", "org_id": "org_northstar", "user_id": "user_dana", "role": "builder", "status": "active" }
+  ],
+  "demo_user_id": "user_marcus",
+  "projects": [
+    {
+      "id": "proj_healthcare",
+      "org_id": "org_northstar",
+      "name": "Healthcare AI Diligence",
+      "department": "Investment Research",
+      "description": "Diligence on Clinia Health — AI workflow software for provider organizations. Evaluating ROI, implementation burden, privacy, hallucination risk, EHR integration, and defensibility.",
+      "default_provider": "mock",
+      "default_model": "mock-demo-1",
+      "created_by": "user_marcus"
+    },
+    {
+      "id": "proj_entsw",
+      "org_id": "org_northstar",
+      "name": "Enterprise Software Diligence",
+      "department": "Investment Research",
+      "description": "Diligence pipeline for B2B software targets. Currently evaluating Relay CI (developer productivity analytics).",
+      "default_provider": "mock",
+      "default_model": "mock-demo-1",
+      "created_by": "user_priya"
+    }
+  ]
+}

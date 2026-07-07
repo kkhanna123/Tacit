@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "enterprise-mind/skill_manifest",
+  "title": "SkillManifest",
+  "description": "Canonical skill.yaml contract (heartbeat §9.3). Claude Skills / GPT actions are later compilation targets of this format.",
+  "type": "object",
+  "required": [
+    "name", "slug", "version", "owner", "description",
+    "required_inputs", "output_type", "token_budget",
+    "compatible_providers", "permission_scope", "validators"
+  ],
+  "properties": {
+    "name": { "type": "string" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "owner": { "type": "string" },
+    "description": { "type": "string" },
+    "intended_users": { "type": "array", "items": { "type": "string" } },
+    "intended_tasks": { "type": "array", "items": { "type": "string" } },
+    "forbidden_tasks": { "type": "array", "items": { "type": "string" } },
+    "required_inputs": { "type": "array", "items": { "type": "string" } },
+    "output_type": { "enum": ["markdown", "json", "text", "table"] },
+    "token_budget": { "type": "integer", "minimum": 1 },
+    "compatible_providers": { "type": "array", "items": { "enum": ["anthropic", "openai", "mock"] } },
+    "default_model_policy": { "type": "string" },
+    "permission_scope": { "enum": ["private", "project", "org"] },
+    "validators": { "type": "array", "items": { "type": "string" } },
+    "harness": { "type": "string" },
+    "changelog": { "type": "string" }
+  }
+}

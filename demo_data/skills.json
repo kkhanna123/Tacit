@@ -1,0 +1,160 @@
+[
+  {
+    "id": "skill_memo",
+    "org_id": "org_northstar",
+    "name": "Investment Memo Bullet Generator",
+    "slug": "investment-memo-bullets",
+    "description": "Turns messy research notes into client-ready memo bullets with a strict section contract, source discipline, and no hype language.",
+    "owner_user_id": "user_marcus",
+    "owner_label": "Investment Research",
+    "visibility": "org",
+    "status": "approved",
+    "installs": ["proj_healthcare"],
+    "versions": [
+      {
+        "id": "sv_memo_100",
+        "version_semver": "1.0.0",
+        "release_notes": "Initial org-approved release.",
+        "approved_by": "user_priya",
+        "system_instructions": "You produce client-ready investment memo bullets from research notes and a compiled context pack. Output markdown with exactly these H2 sections: Thesis, Evidence, Risks, Source Limitations, Next Steps. At most 4 bullets per section. Neutral analytical tone; no promotional adjectives. Flag unverified numbers inline with (unverified). State a confidence level in the Thesis section. Surface risks before any recommendation language. Never include confidential names or unvetted rumors.",
+        "input_schema_json": {
+          "required": ["user_request", "context_pack"],
+          "properties": {
+            "user_request": { "type": "string" },
+            "context_pack": { "type": "string" }
+          }
+        },
+        "output_schema_json": {
+          "artifact_type": "markdown",
+          "required_sections": ["Thesis", "Evidence", "Risks", "Source Limitations", "Next Steps"],
+          "max_bullets_per_section": 4,
+          "max_words": 450
+        },
+        "validators_json": [
+          { "type": "markdown_sections", "required_sections": ["Thesis", "Evidence", "Risks", "Source Limitations", "Next Steps"] },
+          { "type": "forbidden_phrases", "phrases": ["game changer", "revolutionary", "it is important to note", "paradigm shift", "cutting-edge"] },
+          { "type": "length", "max_words": 450, "max_bullets_per_section": 4 },
+          { "type": "required_concepts", "concepts": ["confidence", "source limitation"] },
+          { "type": "no_empty_output", "min_words": 60 },
+          { "type": "context_budget", "max_prompt_tokens": 1500 }
+        ],
+        "rails_json": [
+          "MUST: state confidence level when evidence is incomplete",
+          "MUST: mark self-reported metrics as self-reported",
+          "MUST: surface risks before recommendations",
+          "MUST NOT: use promotional adjectives",
+          "MUST NOT: name reference customers in client-facing output",
+          "MUST NOT: present single-customer data as generalized"
+        ],
+        "examples_json": [
+          {
+            "kind": "good",
+            "note": "Tight bullet, sourced, confidence stated",
+            "text": "- Prior-auth turnaround improved 5.2 → 1.9 days at the largest reference (internally audited; single customer — do not generalize). Confidence: high."
+          },
+          {
+            "kind": "bad",
+            "note": "Hype phrase, no source, generalized",
+            "text": "- The product is a game changer that customers universally love, delivering a 78% labor reduction."
+          }
+        ],
+        "token_budget": 700,
+        "compatible_providers": ["mock", "anthropic", "openai"]
+      }
+    ]
+  },
+  {
+    "id": "skill_board",
+    "org_id": "org_northstar",
+    "name": "Board Update Condenser",
+    "slug": "board-update-condenser",
+    "description": "Condenses deal or portfolio-company status into a four-section board update: TL;DR, Wins, Risks, Asks. Built by Portfolio Ops; transfers structure and validators only — no project content.",
+    "owner_user_id": "user_dana",
+    "owner_label": "Portfolio Ops",
+    "visibility": "org",
+    "status": "approved",
+    "installs": [],
+    "versions": [
+      {
+        "id": "sv_board_210",
+        "version_semver": "2.1.0",
+        "release_notes": "Tightened word limits after Q1 board cycle; added confidence-level rail.",
+        "approved_by": "user_priya",
+        "system_instructions": "You condense project status into a board-ready update. Output markdown with exactly these H2 sections: TL;DR, Wins, Risks, Asks. TL;DR is at most 2 bullets; other sections at most 4. Every risk gets a one-word severity tag (high/medium/low). State a confidence level in the TL;DR. Neutral tone, no promotional adjectives, no unexplained acronyms.",
+        "input_schema_json": {
+          "required": ["user_request", "context_pack"],
+          "properties": {
+            "user_request": { "type": "string" },
+            "context_pack": { "type": "string" }
+          }
+        },
+        "output_schema_json": {
+          "artifact_type": "markdown",
+          "required_sections": ["TL;DR", "Wins", "Risks", "Asks"],
+          "max_bullets_per_section": 4,
+          "max_words": 300
+        },
+        "validators_json": [
+          { "type": "markdown_sections", "required_sections": ["TL;DR", "Wins", "Risks", "Asks"] },
+          { "type": "forbidden_phrases", "phrases": ["game changer", "revolutionary", "it is important to note", "hockey stick"] },
+          { "type": "length", "max_words": 300, "max_bullets_per_section": 4 },
+          { "type": "required_concepts", "concepts": ["confidence"] },
+          { "type": "no_empty_output", "min_words": 40 },
+          { "type": "context_budget", "max_prompt_tokens": 1500 }
+        ],
+        "rails_json": [
+          "MUST: tag every risk with severity (high/medium/low)",
+          "MUST: state confidence level in TL;DR",
+          "MUST NOT: use promotional adjectives",
+          "MUST NOT: include confidential customer names"
+        ],
+        "examples_json": [
+          {
+            "kind": "good",
+            "note": "Severity-tagged risk",
+            "text": "- (high) Champion is single-threaded in 70% of accounts; expansion depends on multi-threading by Q3."
+          },
+          {
+            "kind": "bad",
+            "note": "Hype, no severity",
+            "text": "- Growth is a hockey stick and risks are minimal."
+          }
+        ],
+        "token_budget": 600,
+        "compatible_providers": ["mock", "anthropic", "openai"]
+      }
+    ]
+  },
+  {
+    "id": "skill_risk",
+    "org_id": "org_northstar",
+    "name": "Risk Register Generator",
+    "slug": "risk-register-generator",
+    "description": "Extracts a structured risk register (risk, likelihood, impact, mitigation, owner) from diligence notes. Draft — pending org review.",
+    "owner_user_id": "user_priya",
+    "owner_label": "Investment Research",
+    "visibility": "project",
+    "status": "review",
+    "installs": [],
+    "versions": [
+      {
+        "id": "sv_risk_030",
+        "version_semver": "0.3.0",
+        "release_notes": "Draft under review; harness cases incomplete.",
+        "approved_by": null,
+        "system_instructions": "Extract a risk register table from diligence notes: columns Risk, Likelihood, Impact, Mitigation, Owner. One row per distinct risk. No prose outside the table.",
+        "input_schema_json": { "required": ["user_request", "context_pack"] },
+        "output_schema_json": { "artifact_type": "markdown", "required_sections": ["Risk Register"] },
+        "validators_json": [
+          { "type": "markdown_sections", "required_sections": ["Risk Register"] },
+          { "type": "no_empty_output", "min_words": 30 },
+          { "type": "context_budget", "max_prompt_tokens": 1500 }
+        ],
+        "rails_json": ["MUST NOT: invent risks not present in sources"],
+        "examples_json": [],
+        "token_budget": 500,
+        "compatible_providers": ["mock", "anthropic", "openai"]
+      }
+    ]
+  }
+]

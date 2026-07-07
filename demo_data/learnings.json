@@ -1,0 +1,42 @@
+[
+  {
+    "id": "learning_open_questions",
+    "org_id": "org_northstar",
+    "project_id": "proj_healthcare",
+    "source_run_ids": [],
+    "learning_type": "skill_update",
+    "title": "Add required 'Open Questions' section to Investment Memo Bullet Generator",
+    "body": "In 3 of the last 4 memo runs, the analyst manually appended an 'Open Questions' list after the harness passed, and IC feedback asked where the unresolved items were. Proposal: add 'Open Questions' to the skill's required section contract and harness, so unresolved diligence threads are structurally required rather than remembered.",
+    "evidence_json": {
+      "observation": "Repeated post-run manual edit: analysts appended 'Open Questions' after acceptance.",
+      "occurrences": 3,
+      "window": "last 4 memo runs",
+      "affected_skill": "investment-memo-bullets",
+      "proposed_change": {
+        "output_schema": "required_sections += ['Open Questions']",
+        "validators": "markdown_sections.required_sections += ['Open Questions']",
+        "version_bump": "1.0.0 -> 1.1.0"
+      }
+    },
+    "confidence": 0.82,
+    "proposed_by": "system",
+    "status": "proposed"
+  },
+  {
+    "id": "learning_severity_rail",
+    "org_id": "org_northstar",
+    "project_id": null,
+    "source_run_ids": [],
+    "learning_type": "new_rail",
+    "title": "Org rail: risks in client-facing output carry severity tags",
+    "body": "Board Update Condenser's severity-tagged risks were repeatedly praised in IC review, while memo-skill risks without tags drew clarifying questions. Proposal: org-wide rail requiring severity tags (high/medium/low) on risks in client-facing artifacts.",
+    "evidence_json": {
+      "observation": "Severity-tagged risk bullets received zero clarifying questions across 6 board updates; untagged memo risks averaged 1.5 follow-ups.",
+      "occurrences": 6,
+      "proposed_change": { "rail": "MUST: tag risks with severity (high/medium/low) in client-facing output" }
+    },
+    "confidence": 0.64,
+    "proposed_by": "user_dana",
+    "status": "proposed"
+  }
+]

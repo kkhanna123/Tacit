@@ -1,0 +1,199 @@
+[
+  {
+    "id": "node_org_style",
+    "org_id": "org_northstar",
+    "project_id": null,
+    "parent_id": null,
+    "node_type": "org",
+    "title": "Northstar Capital Style Rules",
+    "summary": "House writing standards for all client-facing and IC-facing output.",
+    "canonical_context": [
+      "Write in concise, high-signal bullets.",
+      "Avoid hype language and promotional adjectives.",
+      "Separate thesis, evidence, risks, and next steps.",
+      "State confidence level when evidence is incomplete.",
+      "Mark source limitations explicitly."
+    ],
+    "constraints": {
+      "must": ["State confidence levels", "Mark unverified claims"],
+      "must_not": ["Use promotional adjectives", "Bury key risks"]
+    },
+    "priority": 10,
+    "token_budget": 120,
+    "visibility": "org",
+    "tags": ["style", "org-wide"]
+  },
+  {
+    "id": "node_dept_research",
+    "org_id": "org_northstar",
+    "project_id": null,
+    "parent_id": "node_org_style",
+    "node_type": "department",
+    "title": "Investment Research Department",
+    "summary": "Norms for diligence, IC discussion, and client-ready memos.",
+    "canonical_context": [
+      "Outputs should support diligence, IC discussion, and client-ready memos.",
+      "Claims should be tied to source facts when possible.",
+      "Risks should be surfaced before recommendations."
+    ],
+    "constraints": {
+      "must": ["Surface risks before recommendations"],
+      "must_not": ["Present single-customer data as generalized"]
+    },
+    "priority": 20,
+    "token_budget": 100,
+    "visibility": "org",
+    "tags": ["department", "research"]
+  },
+  {
+    "id": "node_proj_healthcare",
+    "org_id": "org_northstar",
+    "project_id": "proj_healthcare",
+    "parent_id": "node_dept_research",
+    "node_type": "project",
+    "title": "Healthcare AI Diligence — Objective",
+    "summary": "Evaluate Clinia Health, AI workflow software for provider organizations.",
+    "canonical_context": [
+      "The project evaluates Clinia Health: an AI drafting layer on Epic/Cerner for prior-auth packets, referrals, and post-visit summaries.",
+      "Key concerns: ROI, implementation burden, privacy, hallucination risk, EHR integration, and defensibility.",
+      "The single largest risk is the Epic partnership dependency (termination rights, native feature overlap).",
+      "Audience for outputs: investment committee and, later, LPs."
+    ],
+    "constraints": {
+      "must": ["Address the Epic dependency prominently"],
+      "must_not": ["Generalize single-customer metrics", "State the payer licensing rumor as fact"]
+    },
+    "priority": 30,
+    "token_budget": 160,
+    "visibility": "project",
+    "tags": ["project", "healthcare", "clinia"]
+  },
+  {
+    "id": "node_wf_memo",
+    "org_id": "org_northstar",
+    "project_id": "proj_healthcare",
+    "parent_id": "node_proj_healthcare",
+    "node_type": "workflow",
+    "title": "Diligence Memo Workflow",
+    "summary": "Turn research notes into IC-ready memo bullets.",
+    "canonical_context": [
+      "Repeatable process: raw research notes → client-ready memo bullets.",
+      "IC reads memos in under 5 minutes; keep every section to at most 4 bullets.",
+      "Unverified numbers must be flagged inline, not footnoted."
+    ],
+    "constraints": {
+      "must": ["Keep sections to 4 bullets or fewer"],
+      "must_not": ["Exceed one page"]
+    },
+    "priority": 40,
+    "token_budget": 100,
+    "visibility": "project",
+    "tags": ["workflow", "memo", "bullets", "client ready", "ic"]
+  },
+  {
+    "id": "node_artifact_bullets",
+    "org_id": "org_northstar",
+    "project_id": "proj_healthcare",
+    "parent_id": "node_wf_memo",
+    "node_type": "artifact",
+    "title": "Client-Ready Bullet Memo",
+    "summary": "Expected output artifact: sectioned markdown bullet memo.",
+    "canonical_context": [
+      "Output is markdown with H2 sections and short bullets.",
+      "Required sections come from the applied skill's output contract.",
+      "Tone: neutral, analytical, no adjectives that sell."
+    ],
+    "output_preferences": ["markdown", "h2-sections", "max-4-bullets-per-section"],
+    "priority": 50,
+    "token_budget": 80,
+    "visibility": "project",
+    "tags": ["artifact", "memo"]
+  },
+  {
+    "id": "node_guardrail_sources",
+    "org_id": "org_northstar",
+    "project_id": "proj_healthcare",
+    "parent_id": "node_proj_healthcare",
+    "node_type": "guardrail",
+    "title": "Source Limitation Guardrail",
+    "summary": "Deterministic constraints on sourcing and claims.",
+    "canonical_context": [
+      "Every quantitative claim must trace to the dataroom, a reference call, or be flagged as unverified.",
+      "Company-provided metrics (NPS, hallucination rate, the 78% labor-reduction slide) must be labeled self-reported.",
+      "Confidential details (customer names, the payer licensing approach) must not appear in client-facing output."
+    ],
+    "constraints": {
+      "must": ["Label self-reported metrics", "Include a source limitations section"],
+      "must_not": ["Name reference customers in client-facing output"]
+    },
+    "priority": 35,
+    "token_budget": 110,
+    "visibility": "project",
+    "tags": ["guardrail", "sources", "compliance"]
+  },
+  {
+    "id": "node_source_clinia",
+    "org_id": "org_northstar",
+    "project_id": "proj_healthcare",
+    "parent_id": "node_proj_healthcare",
+    "node_type": "source",
+    "title": "Clinia Health — Research Notes (compiled facts)",
+    "summary": "Compact fact card distilled from the raw notes dump (calls, refs, dataroom).",
+    "canonical_context": [
+      "Clinia Health: AI drafting layer on Epic/Cerner for prior-auth, referrals, post-visit summaries; raising $40M Series B at $320M pre.",
+      "ARR: $17.2M per dataroom vs $18.4M CEO claim — unreconciled; NDR 118%, gross logo retention 94%, burn $1.4M/mo, 21 months runway.",
+      "Reference calls: 40-clinic ortho group strong (prior-auth 5.2 → 1.9 days, 3-yr renewal at +20% price) but 5-month implementation vs 6 weeks promised; regional CMIO stalled at 150-seat pilot pending an Epic version upgrade.",
+      "Hallucination rate 2.3% of drafts (internal eval, all drafts clinician-reviewed before sending; methodology unvalidated).",
+      "Core risk: Epic partnership dependency — termination rights unknown; Epic building overlapping native features.",
+      "Margin: 71% claimed gross margin recomputes to 64-66% with inference and deployment engineering allocated."
+    ],
+    "source_refs": ["demo_data/research_notes_raw.md"],
+    "priority": 45,
+    "token_budget": 260,
+    "visibility": "project",
+    "tags": ["source", "clinia", "facts"],
+    "body_file": "research_notes_raw.md"
+  },
+  {
+    "id": "node_proj_entsw",
+    "org_id": "org_northstar",
+    "project_id": "proj_entsw",
+    "parent_id": "node_dept_research",
+    "node_type": "project",
+    "title": "Enterprise Software Diligence — Objective",
+    "summary": "Evaluate Relay CI, developer productivity analytics for mid-size engineering orgs.",
+    "canonical_context": [
+      "The project evaluates Relay CI: developer productivity analytics (DORA metrics, review latency, incident cost) for 200-2,000-engineer orgs.",
+      "Key concerns: expansion economics, data-access friction with security teams, and GitHub/GitLab platform risk.",
+      "Deal stage: post-term-sheet, confirmatory diligence for the upcoming board discussion."
+    ],
+    "constraints": {
+      "must": ["Tie usage claims to product telemetry shared in the dataroom"],
+      "must_not": ["Reference other portfolio companies' data"]
+    },
+    "priority": 30,
+    "token_budget": 140,
+    "visibility": "project",
+    "tags": ["project", "enterprise-software", "relay"]
+  },
+  {
+    "id": "node_source_relay",
+    "org_id": "org_northstar",
+    "project_id": "proj_entsw",
+    "parent_id": "node_proj_entsw",
+    "node_type": "source",
+    "title": "Relay CI — Deal Facts",
+    "summary": "Compact fact card for the Relay CI confirmatory diligence.",
+    "canonical_context": [
+      "Relay CI: $9.8M ARR growing 96% YoY; 132% NDR; 61 customers, median 480 engineers per customer.",
+      "Term sheet signed: $25M Series A extension at $145M pre; confirmatory diligence closes in 3 weeks.",
+      "Wins this quarter: two 1,500+ engineer logos closed; SOC2 Type II issued; GitHub Marketplace listing approved.",
+      "Open risks: single-threaded champion in 70% of accounts; GitHub API rate-limit changes could raise COGS ~4 points; VP Sales seat open for 5 months.",
+      "Asks in flight: intro to a design-partner CISO; board seat observer confirmation."
+    ],
+    "priority": 45,
+    "token_budget": 220,
+    "visibility": "project",
+    "tags": ["source", "relay", "facts"]
+  }
+]

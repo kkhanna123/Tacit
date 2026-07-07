@@ -1,0 +1,22 @@
+# deps / envs
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# builds
+.next/
+out/
+dist/
+
+# runtime state
+services/api/enterprise_mind.db
+*.log
+nohup.out
+
+# env / secrets
+.env
+.env.*
+
+# os / editor
+.DS_Store

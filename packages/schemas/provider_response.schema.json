@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "enterprise-mind/provider_response",
+  "title": "ProviderResponse",
+  "description": "Normalized response every provider adapter must return (heartbeat §14.2).",
+  "type": "object",
+  "required": ["provider", "model", "input_tokens", "output_tokens", "latency_ms", "text", "finish_reason"],
+  "properties": {
+    "provider": { "enum": ["anthropic", "openai", "mock"] },
+    "model": { "type": "string" },
+    "input_tokens": { "type": "integer", "minimum": 0 },
+    "output_tokens": { "type": "integer", "minimum": 0 },
+    "latency_ms": { "type": "integer", "minimum": 0 },
+    "raw_response": { "type": "object" },
+    "text": { "type": "string" },
+    "tool_calls": { "type": "array" },
+    "finish_reason": { "type": "string" }
+  }
+}
