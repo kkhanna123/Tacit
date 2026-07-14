@@ -36,12 +36,25 @@ export `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` before starting and pick the prov
 ## Layout
 
 ```
-apps/web            Next.js 16 UI (chat, intent tree, skill library, runs, admin)
-services/api        FastAPI backend (compiler, harness engine, provider adapters, ledger)
-packages/schemas    Canonical JSON Schemas (PromptBundle, ProviderResponse, SkillManifest, …)
-demo_data           Seeded workspace + deterministic mock outputs
-docs                Architecture, data model, API, demo script
+apps/web              Next.js 16 UI (chat, intent tree, skill library, runs, admin)
+services/api          FastAPI backend (compiler, harness engine, provider adapters, ledger)
+  └─ demo_data        Seeded workspace + deterministic mock outputs
+packages/schemas      Canonical JSON Schemas (PromptBundle, ProviderResponse, SkillManifest, …)
+docs                  Architecture, data model, API, demo script
 ```
+
+## Deploying to Vercel
+
+Two projects from this one repo (dashboard → *Add New Project* → import twice):
+
+| Project | Root Directory | Env vars |
+| --- | --- | --- |
+| API | `services/api` | none required (`EM_CORS_ORIGINS` optional for custom domains) |
+| Web | `apps/web` | `NEXT_PUBLIC_EM_API` = the API project's URL |
+
+Notes: on Vercel the SQLite database lives in `/tmp` and reseeds on cold start, so every fresh
+instance is a pristine demo workspace (runs/approvals are ephemeral by design). For durable
+state, provision Neon Postgres from the Vercel Marketplace and point SQLModel at it.
 
 See [`docs/architecture.md`](docs/architecture.md) for the design and the determinism boundary,
 and [`enterprise_mind_v1_heartbeat.md`](enterprise_mind_v1_heartbeat.md) for the product spec

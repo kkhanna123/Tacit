@@ -34,9 +34,16 @@ from .seed import seed
 
 app = FastAPI(title="Enterprise Mind V1", version="0.1.0")
 
+# Local dev origins + any comma-separated EM_CORS_ORIGINS, plus Vercel
+# deployment/preview domains so the deployed web app works without extra config.
+import os as _os
+
+_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+_origins += [o.strip() for o in _os.environ.get("EM_CORS_ORIGINS", "").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )

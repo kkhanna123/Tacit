@@ -10,10 +10,13 @@ component inside a controlled workflow, never the source of truth.
 enterpriseMind/
   apps/web            Next.js 16 + TypeScript + Tailwind v4 + React Query
   services/api        FastAPI + SQLModel (SQLite for demo; schema ports to Postgres)
+    demo_data         Seeded Northstar Capital workspace (org, projects, intent nodes, skills, harnesses, learnings, mock outputs)
   packages/schemas    Canonical JSON Schemas (PromptBundle, ProviderResponse, SkillManifest, ValidatorConfig)
-  demo_data           Seeded Northstar Capital workspace (org, projects, intent nodes, skills, harnesses, learnings, mock outputs)
   docs                This folder
 ```
+
+Deployment: each app is its own Vercel project (root directories `apps/web` and `services/api`);
+the API runs on Vercel's Python runtime with SQLite in `/tmp` (reseeds per cold start).
 
 ## Five core objects
 
@@ -50,7 +53,7 @@ makes even that deterministic for demos).
 
 ## Provider strategy
 
-- **Mock mode** (default): deterministic outputs from `demo_data/mock_outputs.json`, zero spend.
+- **Mock mode** (default): deterministic outputs from `services/api/demo_data/mock_outputs.json`, zero spend.
 - **BYO key mode**: set `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` in the API's environment and pick
   the provider in the chat screen. All adapters return the normalized ProviderResponse.
 - **Export mode** (later): compile the bundle for pasting into Claude/ChatGPT apps.
