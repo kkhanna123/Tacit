@@ -72,6 +72,16 @@ def _audit(session: Session, action: str, object_type: str, object_id: str,
     ))
 
 
+@app.get("/")
+def root():
+    return {
+        "service": "Enterprise Mind V1 API",
+        "status": "ok",
+        "docs": "/docs",
+        "try": ["/me", "/projects", "/skills"],
+    }
+
+
 # ---------------------------------------------------------------- auth / org
 
 @app.get("/me")
