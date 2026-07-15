@@ -17,6 +17,8 @@ nohup.out
 # env / secrets
 .env
 .env.*
+# public build-time config, no secrets — intentionally committed
+!apps/web/.env.production
 
 # os / editor
 .DS_Store
